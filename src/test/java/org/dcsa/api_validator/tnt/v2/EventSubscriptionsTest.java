@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.dcsa.api_validator.TestUtil.loadFileAsString;
+import static org.hamcrest.Matchers.*;
 
 /*
 Test for /event-subscriptions
@@ -187,7 +188,7 @@ public class EventSubscriptionsTest {
         .then()
         .assertThat()
         .statusCode(400)
-        .body("message", Matchers.containsString("Id in url does not match id in body"));
+        .body("errors", hasItem(hasEntry(equalTo("message"), equalTo("Id in url does not match id in body"))));
   }
 
   @Test
